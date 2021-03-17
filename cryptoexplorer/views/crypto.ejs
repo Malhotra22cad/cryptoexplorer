@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CryptoExplorer</title>
+    <!--google font for sofia-->
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+    <!--bootstrap CDN-->
+    <!-- CSS only -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+     <!-- JS, Popper.js, and jQuery -->
+       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+   <!---->
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+$(document).ready(function(){
+
+  $("#title").hide().fadeIn({queue: false, duration: 'slow'});
+  $("#graph").fadeIn(3000).blur();
+  
+  setInterval(() => {
+  var myarr1,myarr2;
+  $.ajax({
+  type: 'GET',
+  url: '/sample/getdata',
+  
+  success: function(cryptodata) {
+    //arr=resp.c;
+   // alert('succesfull data:-'+ JSON.stringify(cryptodata));
+    
+    myarr1=parseFloat(cryptodata.b);
+    myarr2=parseFloat(cryptodata.e);
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["crptocurrencies", "value", { role: "style" } ],
+        ["Bitcoin", myarr1, "#FFD700"],
+        ["Ethereum", myarr2, "silver"]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "            Comparing Bitcoin and Ethereum (in USD)",
+        width: 800,
+        height: 900,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+
+$("#put_eth").val(parseFloat($("#ETH_value").val())*myarr2);
+$("#put_btc").val(parseFloat($("#BTC_value").val())*myarr1);  
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+      
+  }
+  },
+  error: function(err) {
+    alert('eror',err);
+
+  }
+});
+
+
+  }, 2000);
+  
+    
+});
+    </script>
+  </head>
+  <body style="background-image: url(https://wallpapercave.com/wp/wp2514440.jpg);">
+    <div class="leftNav jumbotron">
+       <center> <h3>hello </h3>
+            <h1 style="font-family: sofia;"><%=title%>!!</h1>
+            <pre style="font-size: 50px;">😊</pre>
+            <a href="/" style="color: black;">back to main</a>
+        </center>
+       </div>
+    <br><br><br><br>
+      <div class="jumbotron jumbotron-fluid" id="heading">
+        <div class="container" ><center>
+          <h1 class="display-4" style="font-family: sofia; font-size: 150px;" id="title">CryptoExplorer</h1>
+          <br>
+          <h1 class="lead" style="font-size: 50px;"><b>A platform with real-time values of two major cryptocurrencies, Bitcoin and Ethereum!!</b></h1>
+        </center>
+        </div>
+      </div>
+    <h1></h1>
+    
+    
+    <br>
+    <marquee><p style="color: chartreuse; font-size: 200%;">The data is delayed by 3-7 minutes, kindly be on the site for this much time to observe the self changing 
+      behavior of the graph and values!!
+    </p></marquee>
+    <br><br>
+    <div class="row">
+      <div class="col-md-2" ></div>
+      <div class="col-md-8" >
+        <div class="jumbotron" style="background:#ff7267;" id="graph">
+          <center><div id="columnchart_values" style="width: 900px; height: 300px;"></div></center> 
+          <br><br><br><br><br><br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br>
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+      </div>
+      <div class="col-md-2" ></div>
+    </div>
+   
+
+<br><br>
+<div class="row">
+  <div class="col-md-2" ></div>
+  <div class="col-md-4" >
+    <div class="card">
+      <div class="card-body">
+        <center>
+          <h2><img src="https://cdn.dribbble.com/users/2140/screenshots/3814090/bitcoin_2x.png" height="20%" width="20%"><b>Buy</b> <span style="font-family: sofia;">Bitcoin</span></h2></center>
+          <label for="BTC_value">how much Bitcoin you are planing to buy :</label>
+          <center><input type="number" id="BTC_value"  ></center>
+        <label for="put_btc">Your total sum (currently) would be :</label>
+        <center><input type="number"  id="put_btc" readonly></center>
+      
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4" >
+    <div class="card">
+      <div class="card-body">
+        <center>
+          <h2><img src="https://ethereum.org/static/a110735dade3f354a46fc2446cd52476/1d713/eth-home-icon.png">  <b></b><b>Buy</b> <span style="font-family: sofia;">Ethereum</span></h2></center>
+          <label for="ETH_value">how much Ethereum coin you are planing to buy :</label>
+          <center><input type="number" id="ETH_value" ></center>
+          <label for="put_eth">Your total sum (currently) would be :</label>
+          <center><input type="number" id="put_eth" readonly></center>
+      <h1></h1>
+      </div>
+    </div>
+    </div>
+  <div class="col-md-2" ></div>
+  </div>
+
+<br><br><br><br><br><br><br>
+<div class="jumbotron" style="background: rgb(250, 250, 55);">
+  <center><h3>Made by: <span style="font-family: sofia;"> Abhay Malhotra </span></h3>
+  <p><b>Main technologies and method used:- Express(for handling requests using routes), cherrio (for web scrapping), google charts(for bar-graph), jquery(for ajax call and animations).</b></p></center>
+</div>
+
+</body>
+</html>

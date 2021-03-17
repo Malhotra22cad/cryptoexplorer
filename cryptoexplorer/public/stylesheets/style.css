@@ -1,0 +1,33 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.leftNav {
+  width: 130px;
+  position: fixed;
+  z-index: 1;
+  top: 15px;
+  right: 6px;
+  color:crimson;
+  background-color: #a4a4ff; 
+  
+  overflow-x: hidden;
+  padding: 8px 0;
+}
+
+p {
+  /* font-style: oblique; */
+  font-family: 'Times New Roman', Times, serif;
+}
+#heading  {
+  background-color: #f9fc88 ;
+  /* opacity: 0.6; */
+}
+#title
+{ color: #011680;
+  text-shadow: 4px 2px 8px #072ff5;
+}
