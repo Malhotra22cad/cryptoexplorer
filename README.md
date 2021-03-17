@@ -1,2 +1,2 @@
 # cryptoexplorer
-a project based on routes, web-scrapping and graphs
+a dynamic web based project based on routes, web-scrapping and graphs
